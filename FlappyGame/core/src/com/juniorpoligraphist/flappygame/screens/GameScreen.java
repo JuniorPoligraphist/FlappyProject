@@ -1,10 +1,10 @@
-package screens;
+package com.juniorpoligraphist.flappygame.screens;
 
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 
+import com.juniorpoligraphist.flappygame.flappysupport.InputHandler;
 import com.juniorpoligraphist.flappygame.gameworld.GameRenderer;
 import com.juniorpoligraphist.flappygame.gameworld.GameWorld;
 
@@ -20,9 +20,17 @@ public class GameScreen implements Screen {
     public GameScreen() {
         Gdx.app.log("GameScreen", "Attached");
 
-        gameWorld = new GameWorld();
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+        float gameWidth = 136;
+        float gameHeight = screenHeight / (screenWidth / gameWidth);
+
+        int midPointY = (int) (gameHeight / 2);
+
+        gameWorld = new GameWorld(midPointY);
         gameRenderer = new GameRenderer(gameWorld);
 
+        Gdx.input.setInputProcessor(new InputHandler(gameWorld.getGyrocopter()));
     }
 
     @Override
@@ -33,8 +41,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(10 / 255.0f, 15 / 255.0f, 230 / 255.0f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        /*Gdx.gl.glClearColor(10 / 255.0f, 15 / 255.0f, 230 / 255.0f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
+
         Gdx.app.log("GameScreen FPS", (1 / delta) + "");
 
         gameWorld.update(delta);

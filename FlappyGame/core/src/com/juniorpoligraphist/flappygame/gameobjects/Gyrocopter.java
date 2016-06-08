@@ -16,12 +16,11 @@ public class Gyrocopter {
     private int height;
 
     public Gyrocopter(int width, int height, float x, float y) {
+        this.width = width;
+        this.height = height;
         this.position = new Vector2(x, y);
         this.velocity = new Vector2(0, 0);
         this.acceleration = new Vector2(0, 460);
-        this.width = width;
-        this.height = height;
-
     }
 
     public void update(float delta) {

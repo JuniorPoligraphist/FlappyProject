@@ -1,0 +1,59 @@
+package com.juniorpoligraphist.flappygame.flappysupport;
+
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+/**
+ * Created by Junior Poligraphist on 08.06.2016.
+ */
+public class AssetLoader {
+
+    public static Texture texture;
+    public static TextureRegion bg, grass;
+
+    public static Animation gyroAnimation;
+    public static TextureRegion gyroTexture, gyroDown, gyroUp;
+
+    public static TextureRegion skullUp, skullDown, bar;
+
+    public static void load() {
+
+        texture = new Texture(Gdx.files.internal("data/texture.png"));
+        texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        bg = new TextureRegion(texture, 0, 0, 136, 43);
+        bg.flip(false, true);
+
+        grass = new TextureRegion(texture, 0, 43, 143, 11);
+        grass.flip(false, true);
+
+        gyroDown = new TextureRegion(texture, 136, 0, 17, 12);
+        gyroDown.flip(false, true);
+
+        gyroTexture = new TextureRegion(texture, 153, 0, 17, 12);
+        gyroTexture.flip(false, true);
+
+        gyroUp = new TextureRegion(texture, 170, 0, 17, 12);
+        gyroUp.flip(false, true);
+
+        TextureRegion[] gyroSprite = {gyroDown, gyroTexture, gyroUp};
+        gyroAnimation = new Animation(0.06f, gyroSprite);
+        gyroAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+
+        skullUp = new TextureRegion(texture, 192, 0, 24, 14);
+        // Create by flipping existing skullUp
+        skullDown = new TextureRegion(skullUp);
+        skullDown.flip(false, true);
+
+        bar = new TextureRegion(texture, 136, 16, 22, 3);
+        bar.flip(false, true);
+
+    }
+
+    public static void dispose() {
+        texture.dispose();
+    }
+}

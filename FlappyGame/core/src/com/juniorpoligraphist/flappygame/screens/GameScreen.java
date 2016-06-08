@@ -15,10 +15,10 @@ public class GameScreen implements Screen {
 
     private GameWorld gameWorld;
     private GameRenderer gameRenderer;
+    private float runTime;
 
 
     public GameScreen() {
-        Gdx.app.log("GameScreen", "Attached");
 
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
@@ -28,7 +28,7 @@ public class GameScreen implements Screen {
         int midPointY = (int) (gameHeight / 2);
 
         gameWorld = new GameWorld(midPointY);
-        gameRenderer = new GameRenderer(gameWorld);
+        gameRenderer = new GameRenderer(gameWorld, (int) gameHeight, midPointY);
 
         Gdx.input.setInputProcessor(new InputHandler(gameWorld.getGyrocopter()));
     }
@@ -42,19 +42,15 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        /*Gdx.gl.glClearColor(10 / 255.0f, 15 / 255.0f, 230 / 255.0f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
-
         Gdx.app.log("GameScreen FPS", (1 / delta) + "");
 
+        runTime += delta;
         gameWorld.update(delta);
-        gameRenderer.render();
+        gameRenderer.render(runTime);
     }
 
     @Override
     public void resize(int width, int height) {
-        Gdx.app.log("GameScreen", "resizing");
-
     }
 
     @Override
@@ -77,6 +73,5 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
     }
 }

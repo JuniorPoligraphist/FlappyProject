@@ -7,11 +7,16 @@ import com.juniorpoligraphist.flappygame.gameobjects.Gyrocopter;
  * Created by Junior Poligraphist on 08.06.2016.
  */
 public class InputHandler implements InputProcessor {
+    private Gyrocopter myFlappyGyrocopter;
 
-    private Gyrocopter myGyrocopter;
+    public InputHandler(Gyrocopter gyrocopter) {
+        this.myFlappyGyrocopter = gyrocopter;
+    }
 
-    public InputHandler(Gyrocopter myGyrocopter) {
-        this.myGyrocopter = myGyrocopter;
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        myFlappyGyrocopter.onClick();
+        return true;
     }
 
     @Override
@@ -26,13 +31,6 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        myGyrocopter.onClick();
-
         return false;
     }
 

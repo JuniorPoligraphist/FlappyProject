@@ -5,14 +5,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
+import com.juniorpoligraphist.flappygame.gameworld.GameRenderer;
+import com.juniorpoligraphist.flappygame.gameworld.GameWorld;
+
 /**
  * Created by Junior Poligraphist on 08.06.2016.
  */
 public class GameScreen implements Screen {
 
-    public GameScreen () {
+    private GameWorld gameWorld;
+    private GameRenderer gameRenderer;
+
+
+    public GameScreen() {
         Gdx.app.log("GameScreen", "Attached");
+
+        gameWorld = new GameWorld();
+        gameRenderer = new GameRenderer(gameWorld);
+
     }
+
     @Override
     public void show() {
         Gdx.app.log("GameScreen", "show called");
@@ -21,10 +33,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(10/255.0f, 15/255.0f, 230/255.0f, 1f);
+        Gdx.gl.glClearColor(10 / 255.0f, 15 / 255.0f, 230 / 255.0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.app.log("GameScreen FPS", (1/delta) + "");
+        Gdx.app.log("GameScreen FPS", (1 / delta) + "");
 
+        gameWorld.update(delta);
+        gameRenderer.render();
     }
 
     @Override

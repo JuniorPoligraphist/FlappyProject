@@ -18,49 +18,44 @@ public class GameRenderer {
     private GameWorld myGameWorld;
     private OrthographicCamera cam;
     private ShapeRenderer shapeRenderer;
-
     private SpriteBatch batcher;
-
     private int midPointY;
     private int gameHeight;
 
     public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
-        myGameWorld = world;
-
+        this.myGameWorld = world;
         this.gameHeight = gameHeight;
         this.midPointY = midPointY;
-
-        cam = new OrthographicCamera();
-        cam.setToOrtho(true, 136, gameHeight);
-
-        batcher = new SpriteBatch();
-        batcher.setProjectionMatrix(cam.combined);
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(cam.combined);
+        this.cam = new OrthographicCamera();
+        this.cam.setToOrtho(true, 136.0F, (float) gameHeight);
+        this.batcher = new SpriteBatch();
+        this.batcher.setProjectionMatrix(this.cam.combined);
+        this.shapeRenderer = new ShapeRenderer();
+        this.shapeRenderer.setProjectionMatrix(this.cam.combined);
     }
 
     public void render(float runTime) {
+        Gyrocopter gyrocopter = this.myGameWorld.getGyrocopter();
 
-        Gyrocopter gyrocopter = myGameWorld.getGyrocopter();
-
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        shapeRenderer.begin(ShapeType.Filled);
-        shapeRenderer.setColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
-        shapeRenderer.rect(0, 0, 136, midPointY + 66);
-        shapeRenderer.setColor(111 / 255.0f, 186 / 255.0f, 45 / 255.0f, 1);
-        shapeRenderer.rect(0, midPointY + 66, 136, 11);
-        shapeRenderer.setColor(147 / 255.0f, 80 / 255.0f, 27 / 255.0f, 1);
-        shapeRenderer.rect(0, midPointY + 77, 136, 52);
-        shapeRenderer.end();
+        this.shapeRenderer.begin(ShapeType.Filled);
+        this.shapeRenderer.setColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
+        this.shapeRenderer.rect(0.0F, 0.0F, 136.0F, (float) (this.midPointY + 66));
+        this.shapeRenderer.setColor(0.43529412F, 0.7294118F, 0.1764706F, 1.0F);
+        this.shapeRenderer.rect(0.0F, (float) (this.midPointY + 66), 136.0F, 11.0F);
+        this.shapeRenderer.setColor(0.5764706F, 0.3137255F, 0.105882354F, 1.0F);
+        this.shapeRenderer.rect(0.0F, (float) (this.midPointY + 77), 136.0F, 52.0F);
+        this.shapeRenderer.end();
 
-        batcher.begin();
-        batcher.disableBlending();
-        batcher.draw(AssetLoader.bg, 0, midPointY + 23, 136, 43);
-        batcher.enableBlending();
-        batcher.draw(AssetLoader.gyroAnimation.getKeyFrame(runTime), gyrocopter.getX(), gyrocopter.getY(), gyrocopter.getWidth(), gyrocopter.getHeight());
-        batcher.end();
+        this.batcher.begin();
+        this.batcher.disableBlending();
+        this.batcher.draw(AssetLoader.bg, 0.0F, (float) (this.midPointY + 23), 136.0F, 43.0F);
+        this.batcher.enableBlending();
+        this.batcher.draw(AssetLoader.gyroAnimation.getKeyFrame(runTime), gyrocopter.getX(),
+                gyrocopter.getY(), gyrocopter.getWidth(), gyrocopter.getHeight());
 
+        this.batcher.end();
     }
 }

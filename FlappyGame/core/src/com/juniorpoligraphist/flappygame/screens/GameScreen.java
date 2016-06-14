@@ -20,55 +20,49 @@ public class GameScreen implements Screen {
 
     public GameScreen() {
 
-        float screenWidth = Gdx.graphics.getWidth();
-        float screenHeight = Gdx.graphics.getHeight();
-        float gameWidth = 136;
+        float screenWidth = (float) Gdx.graphics.getWidth();
+        float screenHeight = (float) Gdx.graphics.getHeight();
+        float gameWidth = 136.0F;
         float gameHeight = screenHeight / (screenWidth / gameWidth);
+        int midPointY = (int) (gameHeight / 2.0F);
 
-        int midPointY = (int) (gameHeight / 2);
+        this.gameWorld = new GameWorld(midPointY);
+        this.gameRenderer = new GameRenderer(this.gameWorld, (int) gameHeight, midPointY);
+        Gdx.input.setInputProcessor(new InputHandler(this.gameWorld.getGyrocopter()));
+    }
 
-        gameWorld = new GameWorld(midPointY);
-        gameRenderer = new GameRenderer(gameWorld, (int) gameHeight, midPointY);
+    @Override
+    public void render(float delta) {
+        Gdx.app.log("GameScreen FPS", (1 / delta) + "");
 
-        Gdx.input.setInputProcessor(new InputHandler(gameWorld.getGyrocopter()));
+        this.runTime += delta;
+        this.gameWorld.update(delta);
+        this.gameRenderer.render(this.runTime);
     }
 
     @Override
     public void show() {
         Gdx.app.log("GameScreen", "show called");
-
-    }
-
-    @Override
-    public void render(float delta) {
-
-        Gdx.app.log("GameScreen FPS", (1 / delta) + "");
-
-        runTime += delta;
-        gameWorld.update(delta);
-        gameRenderer.render(runTime);
     }
 
     @Override
     public void resize(int width, int height) {
+        Gdx.app.log("GameScreen", "resizing");
     }
 
     @Override
     public void pause() {
         Gdx.app.log("GameScreen", "pause called");
-
     }
 
     @Override
     public void resume() {
         Gdx.app.log("GameScreen", "resume called");
-
     }
 
     @Override
     public void hide() {
         Gdx.app.log("GameScreen", "hide called");
-
     }
 
     @Override

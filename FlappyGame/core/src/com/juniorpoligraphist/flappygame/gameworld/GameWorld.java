@@ -11,17 +11,14 @@ public class GameWorld {
 
     // Create the Constructor
     public GameWorld(int midPointY) {
-        gyrocopter = new Gyrocopter(33, midPointY - 5, 17, 12);
-
+        this.gyrocopter = new Gyrocopter(33, midPointY - 5, 17, 12);
     }
 
     public void update(float delta) {
-        gyrocopter.update(delta);
+        this.gyrocopter.update(delta);
     }
 
     public Gyrocopter getGyrocopter() {
-        return gyrocopter;
+        return this.gyrocopter;
     }
 }
-
-

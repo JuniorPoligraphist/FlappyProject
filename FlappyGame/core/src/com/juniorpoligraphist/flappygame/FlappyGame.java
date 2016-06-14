@@ -8,11 +8,14 @@ import com.juniorpoligraphist.flappygame.screens.GameScreen;
 
 public class FlappyGame extends Game {
 
+    public FlappyGame() {
+    }
+
     @Override
     public void create() {
         Gdx.app.log("FlappyGame", "created");
         AssetLoader.load();
-        setScreen(new GameScreen());
+        this.setScreen(new GameScreen());
     }
 
     @Override

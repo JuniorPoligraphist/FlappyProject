@@ -2,6 +2,7 @@ package com.juniorpoligraphist.flappygame.flappysupport;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -21,6 +22,7 @@ public class AssetLoader {
     public static TextureRegion skullUp;
     public static TextureRegion skullDown;
     public static TextureRegion bar;
+    public static Sound dead;
 
     public AssetLoader() {
     }
@@ -54,6 +56,8 @@ public class AssetLoader {
 
         bar = new TextureRegion(texture, 136, 16, 22, 3);
         bar.flip(false, true);
+
+        dead = Gdx.audio.newSound(Gdx.files.internal("data/dead.wav"));
     }
 
     public static void dispose() {

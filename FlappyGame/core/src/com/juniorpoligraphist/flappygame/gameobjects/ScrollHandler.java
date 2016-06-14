@@ -15,9 +15,9 @@ public class ScrollHandler {
     public ScrollHandler(float yPos) {
         this.frontGrass = new Grass(0.0F, yPos, 143, 11, -59.0F);
         this.backGrass = new Grass(this.frontGrass.getTailX(), yPos, 143, 11, -59.0F);
-        this.pipe1 = new Pipe(210.0F, 0.0F, 22, 60, -59.0F);
-        this.pipe2 = new Pipe(this.pipe1.getTailX() + 49.0F, 0.0F, 22, 70, -59.0F);
-        this.pipe3 = new Pipe(this.pipe2.getTailX() + 49.0F, 0.0F, 22, 60, -59.0F);
+        this.pipe1 = new Pipe(210.0F, 0.0F, 22, 60, -59.0F, yPos);
+        this.pipe2 = new Pipe(this.pipe1.getTailX() + 49.0F, 0.0F, 22, 70, -59.0F, yPos);
+        this.pipe3 = new Pipe(this.pipe2.getTailX() + 49.0F, 0.0F, 22, 60, -59.0F, yPos);
     }
 
     public void update(float delta) {
@@ -40,6 +40,18 @@ public class ScrollHandler {
             this.backGrass.reset(this.frontGrass.getTailX());
         }
 
+    }
+
+    public void stop() {
+        this.frontGrass.stop();
+        this.backGrass.stop();
+        this.pipe1.stop();
+        this.pipe2.stop();
+        this.pipe3.stop();
+    }
+
+    public boolean collides(Gyrocopter gyrocopter) {
+        return this.pipe1.collides(gyrocopter) || this.pipe2.collides(gyrocopter) || this.pipe3.collides(gyrocopter);
     }
 
     public Grass getFrontGrass() {

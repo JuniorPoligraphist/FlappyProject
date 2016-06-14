@@ -1,6 +1,7 @@
 package com.juniorpoligraphist.flappygame.gameworld;
 
 
+import com.juniorpoligraphist.flappygame.flappysupport.AssetLoader;
 import com.juniorpoligraphist.flappygame.gameobjects.Gyrocopter;
 import com.juniorpoligraphist.flappygame.gameobjects.ScrollHandler;
 
@@ -10,6 +11,7 @@ import com.juniorpoligraphist.flappygame.gameobjects.ScrollHandler;
 public class GameWorld {
     private Gyrocopter gyrocopter;
     private ScrollHandler scroller;
+    private boolean isAlive = true;
 
     public GameWorld(int midPointY) {
         this.gyrocopter = new Gyrocopter(33.0F, (float) (midPointY - 5), 17, 12);
@@ -19,6 +21,11 @@ public class GameWorld {
     public void update(float delta) {
         this.gyrocopter.update(delta);
         this.scroller.update(delta);
+        if (this.scroller.collides(this.gyrocopter) && this.isAlive) {
+            this.scroller.stop();
+            AssetLoader.dead.play();
+            this.isAlive = false;
+        }
     }
 
     public Gyrocopter getGyrocopter() {

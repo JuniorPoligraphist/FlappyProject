@@ -1,5 +1,6 @@
 package com.juniorpoligraphist.flappygame.gameobjects;
 
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -12,6 +13,7 @@ public class Gyrocopter {
     private float rotation;
     private int width;
     private int height;
+    private Circle boundingCircle;
 
     public Gyrocopter(float x, float y, int width, int height) {
         this.width = width;
@@ -19,6 +21,7 @@ public class Gyrocopter {
         this.position = new Vector2(x, y);
         this.velocity = new Vector2(0.0F, 0.0F);
         this.acceleration = new Vector2(0.0F, 460.0F);
+        this.boundingCircle = new Circle();
     }
 
     public void update(float delta) {
@@ -27,11 +30,8 @@ public class Gyrocopter {
             this.velocity.y = 200.0F;
         }
 
-        if (this.velocity.y > 200.0F) {
-            this.velocity.y = 200.0F;
-        }
-
         this.position.add(this.velocity.cpy().scl(delta));
+        this.boundingCircle.set(this.position.x + 9.0F, this.position.y + 6.0F, 6.5F);
         if (this.velocity.y < 0.0F) {
             this.rotation -= 600.0F * delta;
             if (this.rotation < -20.0F) {
@@ -77,5 +77,9 @@ public class Gyrocopter {
 
     public float getRotation() {
         return this.rotation;
+    }
+
+    public Circle getBoundingCircle() {
+        return this.boundingCircle;
     }
 }

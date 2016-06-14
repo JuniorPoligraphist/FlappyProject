@@ -12,14 +12,12 @@ import com.juniorpoligraphist.flappygame.gameworld.GameWorld;
  * Created by Junior Poligraphist on 08.06.2016.
  */
 public class GameScreen implements Screen {
-
     private GameWorld gameWorld;
     private GameRenderer gameRenderer;
     private float runTime;
 
 
     public GameScreen() {
-
         float screenWidth = (float) Gdx.graphics.getWidth();
         float screenHeight = (float) Gdx.graphics.getHeight();
         float gameWidth = 136.0F;

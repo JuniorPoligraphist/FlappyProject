@@ -33,6 +33,10 @@ public class Scrollable {
         this.isScrolledLeft = false;
     }
 
+    public void stop() {
+        this.velocity.x = 0.0F;
+    }
+
     public boolean isScrolledLeft() {
         return this.isScrolledLeft;
     }

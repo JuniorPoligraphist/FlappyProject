@@ -28,33 +28,27 @@ public class GameRenderer {
     private int gameHeight;
     private Gyrocopter gyrocopter;
     private ScrollHandler scroller;
-    private Grass frontGrass;
-    private Grass backGrass;
-    private Pipe pipe1;
-    private Pipe pipe2;
-    private Pipe pipe3;
-    private TextureRegion bg;
-    private TextureRegion grass;
+    private Grass frontGrass, backGrass;
+    private Pipe pipe1, pipe2, pipe3;
+    private TextureRegion bg, grass;
     private Animation gyroAnimation;
-    private TextureRegion gyroTexture;
-    private TextureRegion gyroDown;
-    private TextureRegion gyroUp;
-    private TextureRegion skullUp;
-    private TextureRegion skullDown;
-    private TextureRegion bar;
+    private TextureRegion gyroTexture, gyroDown, gyroUp;
+    private TextureRegion skullUp, skullDown, bar;
 
     public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
         this.myGameWorld = world;
         this.gameHeight = gameHeight;
         this.midPointY = midPointY;
-        this.cam = new OrthographicCamera();
-        this.cam.setToOrtho(true, 136.0F, (float) gameHeight);
-        this.batcher = new SpriteBatch();
-        this.batcher.setProjectionMatrix(this.cam.combined);
-        this.shapeRenderer = new ShapeRenderer();
-        this.shapeRenderer.setProjectionMatrix(this.cam.combined);
-        this.initGameObjects();
-        this.initAssets();
+        cam = new OrthographicCamera();
+        cam.setToOrtho(true, 136, gameHeight);
+        batcher = new SpriteBatch();
+        batcher.setProjectionMatrix(cam.combined);
+        shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(cam.combined);
+
+        // Call helper methods to initialize instance variables
+        initGameObjects();
+        initAssets();
     }
 
     private void initGameObjects() {
@@ -80,55 +74,95 @@ public class GameRenderer {
     }
 
     private void drawGrass() {
-        this.batcher.draw(this.grass, this.frontGrass.getX(), this.frontGrass.getY(), (float) this.frontGrass.getWidth(), (float) this.frontGrass.getHeight());
-        this.batcher.draw(this.grass, this.backGrass.getX(), this.backGrass.getY(), (float) this.backGrass.getWidth(), (float) this.backGrass.getHeight());
+        batcher.draw(grass, frontGrass.getX(), frontGrass.getY(),
+                frontGrass.getWidth(), frontGrass.getHeight());
+        batcher.draw(grass, backGrass.getX(), backGrass.getY(),
+                backGrass.getWidth(), backGrass.getHeight());
     }
 
     private void drawSkulls() {
-        this.batcher.draw(this.skullUp, this.pipe1.getX() - 1.0F, this.pipe1.getY() + (float) this.pipe1.getHeight() - 14.0F, 24.0F, 14.0F);
-        this.batcher.draw(this.skullDown, this.pipe1.getX() - 1.0F, this.pipe1.getY() + (float) this.pipe1.getHeight() + 45.0F, 24.0F, 14.0F);
-        this.batcher.draw(this.skullUp, this.pipe2.getX() - 1.0F, this.pipe2.getY() + (float) this.pipe2.getHeight() - 14.0F, 24.0F, 14.0F);
-        this.batcher.draw(this.skullDown, this.pipe2.getX() - 1.0F, this.pipe2.getY() + (float) this.pipe2.getHeight() + 45.0F, 24.0F, 14.0F);
-        this.batcher.draw(this.skullUp, this.pipe3.getX() - 1.0F, this.pipe3.getY() + (float) this.pipe3.getHeight() - 14.0F, 24.0F, 14.0F);
-        this.batcher.draw(this.skullDown, this.pipe3.getX() - 1.0F, this.pipe3.getY() + (float) this.pipe3.getHeight() + 45.0F, 24.0F, 14.0F);
+        batcher.draw(skullUp, pipe1.getX() - 1,
+                pipe1.getY() + pipe1.getHeight() - 14, 24, 14);
+        batcher.draw(skullDown, pipe1.getX() - 1,
+                pipe1.getY() + pipe1.getHeight() + 45, 24, 14);
+
+        batcher.draw(skullUp, pipe2.getX() - 1,
+                pipe2.getY() + pipe2.getHeight() - 14, 24, 14);
+        batcher.draw(skullDown, pipe2.getX() - 1,
+                pipe2.getY() + pipe2.getHeight() + 45, 24, 14);
+
+        batcher.draw(skullUp, pipe3.getX() - 1,
+                pipe3.getY() + pipe3.getHeight() - 14, 24, 14);
+        batcher.draw(skullDown, pipe3.getX() - 1,
+                pipe3.getY() + pipe3.getHeight() + 45, 24, 14);
     }
 
     private void drawPipes() {
-        this.batcher.draw(this.bar, this.pipe1.getX(), this.pipe1.getY(), (float) this.pipe1.getWidth(), (float) this.pipe1.getHeight());
-        this.batcher.draw(this.bar, this.pipe1.getX(), this.pipe1.getY() + (float) this.pipe1.getHeight() + 45.0F, (float) this.pipe1.getWidth(), (float) (this.midPointY + 66 - (this.pipe1.getHeight() + 45)));
-        this.batcher.draw(this.bar, this.pipe2.getX(), this.pipe2.getY(), (float) this.pipe2.getWidth(), (float) this.pipe2.getHeight());
-        this.batcher.draw(this.bar, this.pipe2.getX(), this.pipe2.getY() + (float) this.pipe2.getHeight() + 45.0F, (float) this.pipe2.getWidth(), (float) (this.midPointY + 66 - (this.pipe2.getHeight() + 45)));
-        this.batcher.draw(this.bar, this.pipe3.getX(), this.pipe3.getY(), (float) this.pipe3.getWidth(), (float) this.pipe3.getHeight());
-        this.batcher.draw(this.bar, this.pipe3.getX(), this.pipe3.getY() + (float) this.pipe3.getHeight() + 45.0F, (float) this.pipe3.getWidth(), (float) (this.midPointY + 66 - (this.pipe3.getHeight() + 45)));
+        batcher.draw(bar, pipe1.getX(), pipe1.getY(), pipe1.getWidth(),
+                pipe1.getHeight());
+        batcher.draw(bar, pipe1.getX(), pipe1.getY() + pipe1.getHeight() + 45,
+                pipe1.getWidth(), midPointY + 66 - (pipe1.getHeight() + 45));
+
+        batcher.draw(bar, pipe2.getX(), pipe2.getY(), pipe2.getWidth(),
+                pipe2.getHeight());
+        batcher.draw(bar, pipe2.getX(), pipe2.getY() + pipe2.getHeight() + 45,
+                pipe2.getWidth(), midPointY + 66 - (pipe2.getHeight() + 45));
+
+        batcher.draw(bar, pipe3.getX(), pipe3.getY(), pipe3.getWidth(),
+                pipe3.getHeight());
+        batcher.draw(bar, pipe3.getX(), pipe3.getY() + pipe3.getHeight() + 45,
+                pipe3.getWidth(), midPointY + 66 - (pipe3.getHeight() + 45));
     }
 
     public void render(float runTime) {
-
-        Gdx.gl.glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        this.shapeRenderer.begin(ShapeType.Filled);
-        this.shapeRenderer.setColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
-        this.shapeRenderer.rect(0.0F, 0.0F, 136.0F, (float) (this.midPointY + 66));
-        this.shapeRenderer.setColor(0.43529412F, 0.7294118F, 0.1764706F, 1.0F);
-        this.shapeRenderer.rect(0.0F, (float) (this.midPointY + 66), 136.0F, 11.0F);
-        this.shapeRenderer.setColor(0.5764706F, 0.3137255F, 0.105882354F, 1.0F);
-        this.shapeRenderer.rect(0.0F, (float) (this.midPointY + 77), 136.0F, 52.0F);
-        this.shapeRenderer.end();
+        shapeRenderer.begin(ShapeType.Filled);
+        shapeRenderer.setColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
+        shapeRenderer.rect(0, 0, 136, midPointY + 66);
 
-        this.batcher.begin();
-        this.batcher.disableBlending();
-        this.batcher.draw(this.bg, 0.0F, (float) (this.midPointY + 23), 136.0F, 43.0F);
-        this.drawGrass();
-        this.drawPipes();
-        this.batcher.enableBlending();
-        this.drawSkulls();
-        if (this.gyrocopter.shouldntFlap()) {
-            this.batcher.draw(this.gyroTexture, this.gyrocopter.getX(), this.gyrocopter.getY(), this.gyrocopter.getWidth() / 2.0F, this.gyrocopter.getHeight() / 2.0F, this.gyrocopter.getWidth(), this.gyrocopter.getHeight(), 1.0F, 1.0F, this.gyrocopter.getRotation());
+        // Draw Grass
+        shapeRenderer.setColor(111 / 255.0f, 186 / 255.0f, 45 / 255.0f, 1);
+        shapeRenderer.rect(0, midPointY + 66, 136, 11);
+
+        // Draw Dirt
+        shapeRenderer.setColor(147 / 255.0f, 80 / 255.0f, 27 / 255.0f, 1);
+        shapeRenderer.rect(0, midPointY + 77, 136, 52);
+
+        shapeRenderer.end();
+
+        batcher.begin();
+        batcher.disableBlending();
+        batcher.draw(bg, 0, midPointY + 23, 136, 43);
+
+        drawGrass();
+        drawPipes();
+        batcher.enableBlending();
+        drawSkulls();
+
+        if (gyrocopter.shouldntFlap()) {
+            batcher.draw(gyroTexture, gyrocopter.getX(), gyrocopter.getY(),
+                    gyrocopter.getWidth() / 2.0f, gyrocopter.getHeight() / 2.0f,
+                    gyrocopter.getWidth(), gyrocopter.getHeight(), 1, 1, gyrocopter.getRotation());
+
         } else {
-            this.batcher.draw(this.gyroAnimation.getKeyFrame(runTime), this.gyrocopter.getX(), this.gyrocopter.getY(), this.gyrocopter.getWidth() / 2.0F, this.gyrocopter.getHeight() / 2.0F, this.gyrocopter.getWidth(), this.gyrocopter.getHeight(), 1.0F, 1.0F, this.gyrocopter.getRotation());
+            batcher.draw(gyroAnimation.getKeyFrame(runTime), gyrocopter.getX(),
+                    gyrocopter.getY(), gyrocopter.getWidth() / 2.0f,
+                    gyrocopter.getHeight() / 2.0f, gyrocopter.getWidth(), gyrocopter.getHeight(),
+                    1, 1, gyrocopter.getRotation());
         }
 
-        this.batcher.end();
+        // Convert integer into String
+        String score = myGameWorld.getScore() + "";
+
+        // Draw shadow first
+        AssetLoader.shadow.draw(batcher, "" + myGameWorld.getScore(), (136 / 2)
+                - (3 * score.length()), 12);
+        // Draw text
+        AssetLoader.font.draw(batcher, "" + myGameWorld.getScore(), (136 / 2)
+                - (3 * score.length() - 1), 11);
+
+        batcher.end();
     }
 }

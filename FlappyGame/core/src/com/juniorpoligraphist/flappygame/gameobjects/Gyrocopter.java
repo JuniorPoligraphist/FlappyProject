@@ -2,6 +2,7 @@ package com.juniorpoligraphist.flappygame.gameobjects;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+import com.juniorpoligraphist.flappygame.flappysupport.AssetLoader;
 
 /**
  * Created by Junior Poligraphist on 08.06.2016.
@@ -14,72 +15,92 @@ public class Gyrocopter {
     private int width;
     private int height;
     private Circle boundingCircle;
+    private boolean isAlive;
 
     public Gyrocopter(float x, float y, int width, int height) {
         this.width = width;
         this.height = height;
-        this.position = new Vector2(x, y);
-        this.velocity = new Vector2(0.0F, 0.0F);
-        this.acceleration = new Vector2(0.0F, 460.0F);
-        this.boundingCircle = new Circle();
+        position = new Vector2(x, y);
+        velocity = new Vector2(0, 0);
+        acceleration = new Vector2(0, 460);
+        boundingCircle = new Circle();
+        isAlive = true;
     }
 
     public void update(float delta) {
-        this.velocity.add(this.acceleration.cpy().scl(delta));
-        if (this.velocity.y > 200.0F) {
-            this.velocity.y = 200.0F;
+        velocity.add(acceleration.cpy().scl(delta));
+
+        if (velocity.y > 200) {
+            velocity.y = 200;
         }
 
-        this.position.add(this.velocity.cpy().scl(delta));
-        this.boundingCircle.set(this.position.x + 9.0F, this.position.y + 6.0F, 6.5F);
-        if (this.velocity.y < 0.0F) {
-            this.rotation -= 600.0F * delta;
-            if (this.rotation < -20.0F) {
-                this.rotation = -20.0F;
+        position.add(velocity.cpy().scl(delta));
+        boundingCircle.set(position.x + 9, position.y + 6, 6.5f);
+
+        if (velocity.y < 0) {
+            rotation -= 600 * delta;
+            if (rotation < -20) {
+                rotation = -20;
             }
         }
 
-        if (this.isFalling()) {
-            this.rotation += 480.0F * delta;
-            if (this.rotation > 90.0F) {
-                this.rotation = 90.0F;
+        if (isFalling() || !isAlive) {
+            rotation += 480 * delta;
+            if (rotation > 90) {
+                rotation = 90;
             }
         }
     }
 
     public boolean isFalling() {
-        return this.velocity.y > 110.0F;
+        return velocity.y > 110;
     }
 
     public boolean shouldntFlap() {
-        return this.velocity.y > 70.0F;
+        return velocity.y > 70 || !isAlive;
     }
 
     public void onClick() {
-        this.velocity.y = -140.0F;
+        if (isAlive) {
+            AssetLoader.flap.play();
+            velocity.y = -140;
+        }
+    }
+
+    public void die() {
+        isAlive = false;
+        velocity.y = 0;
+    }
+
+    public void decelerate() {
+        acceleration.y = 0;
     }
 
     public float getX() {
-        return this.position.x;
+        return position.x;
     }
 
     public float getY() {
-        return this.position.y;
+        return position.y;
     }
 
     public float getWidth() {
-        return (float) this.width;
+        return width;
     }
 
     public float getHeight() {
-        return (float) this.height;
+        return height;
     }
 
     public float getRotation() {
-        return this.rotation;
+        return rotation;
     }
 
     public Circle getBoundingCircle() {
-        return this.boundingCircle;
+        return boundingCircle;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 }

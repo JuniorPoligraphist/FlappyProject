@@ -13,51 +13,52 @@ public class Scrollable {
     protected boolean isScrolledLeft;
 
     public Scrollable(float x, float y, int width, int height, float scrollSpeed) {
-        this.position = new Vector2(x, y);
-        this.velocity = new Vector2(scrollSpeed, 0.0F);
+        position = new Vector2(x, y);
+        velocity = new Vector2(scrollSpeed, 0);
         this.width = width;
         this.height = height;
-        this.isScrolledLeft = false;
+        isScrolledLeft = false;
     }
 
     public void update(float delta) {
-        this.position.add(this.velocity.cpy().scl(delta));
-        if (this.position.x + (float) this.width < 0.0F) {
-            this.isScrolledLeft = true;
-        }
+        position.add(velocity.cpy().scl(delta));
 
+        if (position.x + width < 0) {
+            isScrolledLeft = true;
+        }
     }
 
     public void reset(float newX) {
-        this.position.x = newX;
-        this.isScrolledLeft = false;
+        position.x = newX;
+        isScrolledLeft = false;
     }
 
     public void stop() {
-        this.velocity.x = 0.0F;
+        velocity.x = 0;
     }
 
+    // Getters for instance variables
     public boolean isScrolledLeft() {
-        return this.isScrolledLeft;
+        return isScrolledLeft;
     }
 
     public float getTailX() {
-        return this.position.x + (float) this.width;
+        return position.x + width;
     }
 
     public float getX() {
-        return this.position.x;
+        return position.x;
     }
 
     public float getY() {
-        return this.position.y;
+        return position.y;
     }
 
     public int getWidth() {
-        return this.width;
+        return width;
     }
 
     public int getHeight() {
-        return this.height;
+        return height;
     }
 }

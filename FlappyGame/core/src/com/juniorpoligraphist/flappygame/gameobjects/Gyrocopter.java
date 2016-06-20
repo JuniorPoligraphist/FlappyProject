@@ -34,11 +34,17 @@ public class Gyrocopter {
             velocity.y = 200;
         }
 
+        if (position.y < -13) {
+            position.y = -13;
+            position.y = 0;
+        }
+
         position.add(velocity.cpy().scl(delta));
         boundingCircle.set(position.x + 9, position.y + 6, 6.5f);
 
         if (velocity.y < 0) {
             rotation -= 600 * delta;
+
             if (rotation < -20) {
                 rotation = -20;
             }
@@ -70,6 +76,16 @@ public class Gyrocopter {
     public void die() {
         isAlive = false;
         velocity.y = 0;
+    }
+
+    public void onRestart(int y) {
+        rotation = 0;
+        position.y = y;
+        velocity.x = 0;
+        velocity.y = 0;
+        acceleration.x = 0;
+        acceleration.y = 460;
+        isAlive = true;
     }
 
     public void decelerate() {

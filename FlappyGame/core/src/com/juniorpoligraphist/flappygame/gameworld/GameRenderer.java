@@ -153,7 +153,7 @@ public class GameRenderer {
                     1, 1, gyrocopter.getRotation());
         }
 
-        // Convert integer into String
+   /*     // Convert integer into String
         String score = myGameWorld.getScore() + "";
 
         // Draw shadow first
@@ -161,7 +161,37 @@ public class GameRenderer {
                 - (3 * score.length()), 12);
         // Draw text
         AssetLoader.font.draw(batcher, "" + myGameWorld.getScore(), (136 / 2)
-                - (3 * score.length() - 1), 11);
+                - (3 * score.length() - 1), 11);*/
+
+
+        // ВРЕМЕННЫЙ КОД! Изменим позже:
+
+        if (myGameWorld.isReady()) {
+            // Отрисуем сначала тень
+            AssetLoader.shadow.draw(batcher, "Touch me", (136 / 2)
+                    - (42), 76);
+            // Отрисуем сам текст
+            AssetLoader.font.draw(batcher, "Touch me", (136 / 2)
+                    - (42 - 1), 75);
+        } else {
+
+            if (myGameWorld.isGameOver()) {
+                AssetLoader.shadow.draw(batcher, "Game Over", 25, 56);
+                AssetLoader.font.draw(batcher, "Game Over", 24, 55);
+
+                AssetLoader.shadow.draw(batcher, "Try again?", 23, 76);
+                AssetLoader.font.draw(batcher, "Try again?", 24, 75);
+
+
+            }
+
+            String score = myGameWorld.getScore() + "";
+
+            AssetLoader.shadow.draw(batcher, "" + myGameWorld.getScore(), (136 / 2)
+                    - (3 * score.length()), 12);
+            AssetLoader.font.draw(batcher, "" + myGameWorld.getScore(), (136 / 2)
+                    - (3 * score.length() - 1), 11);
+        }
 
         batcher.end();
     }

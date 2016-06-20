@@ -16,14 +16,41 @@ public class GameWorld {
     private Rectangle ground;
     private boolean isAlive = true;
     private int score = 0;
+    private int midPointY;
+
+    private GameState gameState;
+
+
+    public enum GameState {
+        READY, RUNNING, GAMEOVER;
+    }
 
     public GameWorld(int midPointY) {
+
+        gameState = GameState.READY;
         gyrocopter = new Gyrocopter(33, midPointY - 5, 17, 12);
         scroller = new ScrollHandler(this, midPointY + 66);
         ground = new Rectangle(0, midPointY + 66, 137, 11);
     }
 
+
     public void update(float delta) {
+        switch (gameState) {
+            case READY:
+                updateReady(delta);
+                break;
+            case RUNNING:
+            default:
+                updateRunning(delta);
+                break;
+        }
+    }
+
+    public void updateReady(float delta) {
+
+    }
+
+    public void updateRunning(float delta) {
         if (delta > .15f) {
             delta = .15f;
         }
@@ -41,6 +68,7 @@ public class GameWorld {
             scroller.stop();
             gyrocopter.die();
             gyrocopter.decelerate();
+            gameState = GameState.GAMEOVER;
         }
     }
 
@@ -58,5 +86,25 @@ public class GameWorld {
 
     public void addScore(int increment) {
         score += increment;
+    }
+
+    public boolean isReady() {
+        return gameState == GameState.READY;
+    }
+
+    public void start() {
+        gameState = GameState.RUNNING;
+    }
+
+    public void restart() {
+        gameState = GameState.READY;
+        score = 0;
+        gyrocopter.onRestart(midPointY - 5);
+        scroller.onRestart();
+        gameState = GameState.READY;
+    }
+
+    public boolean isGameOver() {
+        return gameState == GameState.GAMEOVER;
     }
 }

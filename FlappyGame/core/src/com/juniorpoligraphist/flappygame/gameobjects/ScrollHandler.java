@@ -57,6 +57,14 @@ public class ScrollHandler {
         pipe3.stop();
     }
 
+    public void onRestart() {
+        frontGrass.onRestart(0, SCROLL_SPEED);
+        backGrass.onRestart(frontGrass.getTailX(), SCROLL_SPEED);
+        pipe1.onRestart(210, SCROLL_SPEED);
+        pipe2.onRestart(pipe1.getTailX() + PIPE_GAP, SCROLL_SPEED);
+        pipe3.onRestart(pipe2.getTailX() + PIPE_GAP, SCROLL_SPEED);
+    }
+
     public boolean collides(Gyrocopter gyrocopter) {
 
         if (!pipe1.isScored()

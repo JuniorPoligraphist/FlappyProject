@@ -3,6 +3,7 @@ package com.juniorpoligraphist.flappygame.flappysupport;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,6 +20,7 @@ public class AssetLoader {
     public static TextureRegion skullUp, skullDown, bar;
     public static Sound dead, flap, coin;
     public static BitmapFont font, shadow;
+
 
     public static void load() {
         texture = new Texture(Gdx.files.internal("data/texture.png"));
@@ -55,10 +57,11 @@ public class AssetLoader {
         coin = Gdx.audio.newSound(Gdx.files.internal("data/coin.wav"));
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
-//        font.setScale(.25f, -.25f);
+        font.setColor(Color.LIME);
+        //  font.setScale(.25f, -.25f);
 
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
-//        shadow.setScale(.25f, -.25f);
+        //  shadow.setScale(.25f, -.25f);
     }
 
     public static void dispose() {

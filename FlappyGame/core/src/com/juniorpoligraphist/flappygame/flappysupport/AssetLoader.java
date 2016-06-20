@@ -2,6 +2,7 @@ package com.juniorpoligraphist.flappygame.flappysupport;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,7 +21,7 @@ public class AssetLoader {
     public static TextureRegion skullUp, skullDown, bar;
     public static Sound dead, flap, coin;
     public static BitmapFont font, shadow;
-
+    public static Preferences preferences;
 
     public static void load() {
         texture = new Texture(Gdx.files.internal("data/texture.png"));
@@ -62,6 +63,19 @@ public class AssetLoader {
 
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
         //  shadow.setScale(.25f, -.25f);
+        preferences = Gdx.app.getPreferences("FlappyGame");
+        if (!preferences.contains("highScore")) {
+            preferences.putInteger("highScore", 0);
+        }
+    }
+
+    public static void setHighScore(int val) {
+        preferences.putInteger("highScore", val);
+        preferences.flush();
+    }
+
+    public static int getHighScore() {
+        return preferences.getInteger("highScore");
     }
 
     public static void dispose() {

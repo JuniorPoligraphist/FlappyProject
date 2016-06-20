@@ -20,14 +20,14 @@ public class GameWorld {
 
     private GameState gameState;
 
-
     public enum GameState {
-        READY, RUNNING, GAMEOVER;
+        READY, RUNNING, GAMEOVER, HIGHSCORE;
     }
 
     public GameWorld(int midPointY) {
 
         gameState = GameState.READY;
+        midPointY = midPointY;
         gyrocopter = new Gyrocopter(33, midPointY - 5, 17, 12);
         scroller = new ScrollHandler(this, midPointY + 66);
         ground = new Rectangle(0, midPointY + 66, 137, 11);
@@ -70,6 +70,11 @@ public class GameWorld {
             gyrocopter.decelerate();
             gameState = GameState.GAMEOVER;
         }
+
+        if (score > AssetLoader.getHighScore()) {
+            AssetLoader.setHighScore(score);
+            gameState = GameState.HIGHSCORE;
+        }
     }
 
     public Gyrocopter getGyrocopter() {
@@ -107,4 +112,9 @@ public class GameWorld {
     public boolean isGameOver() {
         return gameState == GameState.GAMEOVER;
     }
+
+    public boolean isHighScore() {
+        return gameState == GameState.HIGHSCORE;
+    }
+
 }

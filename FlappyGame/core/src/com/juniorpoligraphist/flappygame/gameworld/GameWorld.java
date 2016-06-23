@@ -40,8 +40,8 @@ public class GameWorld {
                 updateReady(delta);
                 break;
             case RUNNING:
-            default:
                 updateRunning(delta);
+            default:
                 break;
         }
     }

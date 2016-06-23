@@ -25,7 +25,7 @@ public class InputHandler implements InputProcessor {
         }
         myFlappyGyrocopter.onClick();
 
-        if (myGameWorld.isGameOver()) {
+        if (myGameWorld.isGameOver() || myGameWorld.isHighScore()) {
             myGameWorld.restart();
         }
         return true;
